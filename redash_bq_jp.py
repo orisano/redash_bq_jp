@@ -3,7 +3,7 @@ import hashlib
 import re
 
 from redash.query_runner import register
-from redash.query_runner.big_query from BigQuery
+from redash.query_runner.big_query import BigQuery
 import six
 
 
