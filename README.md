@@ -3,7 +3,7 @@ redash big_query runner patch for japanese columns.
 
 ## Installation
 ```
-pip install redash_bq_jp
+pip install git+https://github.com/orisano/redash_bq_jp
 ```
 
 ## How to use
