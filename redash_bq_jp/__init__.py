@@ -6,10 +6,10 @@ from redash.query_runner import register
 from redash.query_runner.big_query import BigQuery
 import six
 
+from .matcher import find_include_japanese_column
+
 
 class BigQueryJP(BigQuery):
-    JAPANESE_MATCHER = re.compile(six.u("(?<=\\s(as|aS|As|AS)\\s)\\s*\\S*[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+[^\\s;,]"))
-
     @classmethod
     def type(cls):
         return "bigquery_jp"
@@ -19,8 +19,8 @@ class BigQueryJP(BigQuery):
             return six.u("_") + hashlib.md5(s.encode("utf-8")).hexdigest()
 
         escape_table = {
-            escape(japanese.lstrip()): japanese.lstrip()
-            for japanese in JAPANESE_MATCHER.finditer(query)
+            escape(japanese): japanese
+            for japanese in find_include_japanese_column(query)
         }
 
         for escaped, raw in six.iteritems(escape_table):
