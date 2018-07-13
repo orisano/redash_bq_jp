@@ -16,7 +16,7 @@ class BigQueryJP(BigQuery):
 
     def run_query(self, query, user):
         def escape(s):
-            return six.u("_") + hashlib.md5(s.encode("utf-8")).hexdigest()
+            return u"_" + hashlib.md5(s.encode("utf-8")).hexdigest()
 
         escape_table = {
             escape(japanese): japanese
