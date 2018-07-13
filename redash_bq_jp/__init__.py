@@ -2,9 +2,10 @@
 import json
 import hashlib
 
-from redash.query_runner import register
-from redash.query_runner.big_query import BigQuery
 import six
+
+import redash.query_runner
+from redash.query_runner.big_query import BigQuery
 
 from .matcher import find_include_japanese_column
 
@@ -44,4 +45,4 @@ class BigQueryJP(BigQuery):
         return json.dumps(data), None
 
 
-register(BigQueryJP)
+redash.query_runner.register(BigQueryJP)
