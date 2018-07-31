@@ -1,13 +1,15 @@
 # coding: utf-8
-import json
 import hashlib
+import re
+import json
+import logging
 
+from redash.query_runner import register
+from redash.query_runner.big_query import BigQuery
 import six
 
-import redash.query_runner
-from redash.query_runner.big_query import BigQuery
-
 from .matcher import find_include_japanese_column
+logger = logging.getLogger(__name__)
 
 
 class BigQueryJP(BigQuery):
@@ -16,17 +18,20 @@ class BigQueryJP(BigQuery):
         return "bigquery_jp"
 
     def run_query(self, query, user):
+        logging.info('query_reply : bq_jp :  %s', query)
         def escape(s):
-            return u"_" + hashlib.md5(s.encode("utf-8")).hexdigest()
+            return six.u("_") + hashlib.md5(s.encode("utf-8")).hexdigest()
 
         escape_table = {
             escape(japanese): japanese
             for japanese in find_include_japanese_column(query)
         }
+        logging.info('query_reply : bq_jp :  %s', escape_table)
 
         for escaped, raw in six.iteritems(escape_table):
             query = query.replace(raw, escaped)
 
+        logging.info('query_encode : bq_jp :  %s', query)
         json_data, error = super(BigQueryJP, self).run_query(query, user)
         if error is not None:
             return None, error
@@ -45,4 +50,4 @@ class BigQueryJP(BigQuery):
         return json.dumps(data), None
 
 
-redash.query_runner.register(BigQueryJP)
+register(BigQueryJP)

@@ -1,6 +1,8 @@
 # coding: utf-8
 import unittest
 
+import six
+
 import matcher
 
 
@@ -16,6 +18,14 @@ class TestMatcher(unittest.TestCase):
     def test_kanji(self):
         got = matcher.find_include_japanese_column(u"kanji as 漢字")
         self.assertEqual(got, [u"漢字"])
+
+    def test_itaiji(self):
+        got = matcher.find_include_japanese_column(u"itaiji as 髙")
+        self.assertEqual(got, [u"髙"])
+
+    def test_kisyuizonmoji(self):
+        got = matcher.find_include_japanese_column(u"kisyuizonmoji as ①㊀㎆")
+        self.assertEqual(got, [u"①㊀㎆"])
 
     def test_no_as(self):
         got = matcher.find_include_japanese_column(u"てすと")
