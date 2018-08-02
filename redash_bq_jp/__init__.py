@@ -1,6 +1,5 @@
 # coding: utf-8
 import hashlib
-import re
 import json
 import logging
 
