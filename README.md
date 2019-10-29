@@ -11,5 +11,8 @@ pip install git+https://github.com/orisano/redash_bq_jp
 export REDASH_ADDITIONAL_QUERY_RUNNERS="redash_bq_jp"
 ```
 
+## Author
+Nao YONASHIRO(@orisano)
+
 ## License
 MIT
